@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SE Mid-Sem Prep · Software Engineering Study Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#070b14;
+    --surface:#0e1526;
+    --surface-2:#121c31;
+    --border:rgba(148,163,184,.14);
+    --text:#e7edf7;
+    --muted:#94a3b8;
+    --indigo:#6366f1;
+    --green:#10b981;
+    --amber:#f59e0b;
+    --red:#ef4444;
+    --violet:#8b5cf6;
+    --radius:16px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.brand{font-family:'Plus Jakarta Sans','Inter',sans-serif}
+  section{scroll-margin-top:96px}
+
+  .container{max-width:1100px;margin:0 auto;padding:0 20px}
+
+  /* ---------- NAVBAR ---------- */
+  .navbar{
+    position:sticky;top:0;z-index:100;
+    background:rgba(7,11,20,.82);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-inner{
+    max-width:1100px;margin:0 auto;padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  }
+  .brand{font-weight:800;font-size:1.15rem;display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+  .brand-logo{
+    width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:.95rem;
+    background:linear-gradient(135deg,#6366f1,#8b5cf6);box-shadow:0 4px 14px rgba(99,102,241,.4);
+  }
+  .nav-links{display:flex;gap:6px;flex-wrap:wrap}
+  .nav-links a{
+    color:var(--muted);text-decoration:none;font-size:.86rem;font-weight:500;
+    padding:7px 14px;border-radius:999px;border:1px solid transparent;
+    transition:all .2s ease;
+  }
+  .nav-links a:hover{color:#fff;background:rgba(99,102,241,.14);border-color:rgba(99,102,241,.35)}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;overflow:hidden;
+    padding:64px 0 40px;
+    background:
+      radial-gradient(700px 340px at 15% -10%,rgba(99,102,241,.22),transparent 65%),
+      radial-gradient(700px 340px at 85% 0%,rgba(139,92,246,.18),transparent 65%);
+  }
+  .hero-badge{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:.78rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+    color:#c7d2fe;background:rgba(99,102,241,.14);border:1px solid rgba(99,102,241,.35);
+    padding:6px 14px;border-radius:999px;margin-bottom:18px;
+  }
+  .hero h1{font-size:clamp(1.9rem,4.5vw,2.9rem);font-weight:800;line-height:1.15;letter-spacing:-.02em;margin-bottom:12px}
+  .hero h1 .grad{
+    background:linear-gradient(90deg,#818cf8,#c084fc,#34d399);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  }
+  .hero p.sub{color:var(--muted);max-width:620px;font-size:1rem;margin-bottom:30px}
+
+  .video-card{
+    display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+    background:linear-gradient(160deg,var(--surface-2),var(--surface));
+    border:1px solid var(--border);border-radius:var(--radius);
+    padding:22px 24px;box-shadow:0 18px 50px rgba(0,0,0,.45);
+  }
+  .video-thumb{
+    width:88px;height:88px;flex-shrink:0;border-radius:14px;display:grid;place-items:center;
+    font-size:2rem;color:#fff;text-decoration:none;
+    background:linear-gradient(135deg,#dc2626,#ef4444);
+    box-shadow:0 10px 26px rgba(239,68,68,.35);
+    transition:transform .2s ease,box-shadow .2s ease;
+  }
+  .video-thumb:hover{transform:scale(1.06);box-shadow:0 14px 34px rgba(239,68,68,.5)}
+  .video-meta{flex:1;min-width:230px}
+  .video-meta .v-title{font-family:'Plus Jakarta Sans';font-weight:700;font-size:1.08rem;line-height:1.35;margin-bottom:6px}
+  .video-meta .v-channel{color:var(--muted);font-size:.88rem;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .pill{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:.74rem;font-weight:600;padding:3px 10px;border-radius:999px;white-space:nowrap;
+  }
+  .pill.dark{background:rgba(148,163,184,.12);color:#cbd5e1;border:1px solid var(--border)}
+  .pill.red{background:rgba(239,68,68,.14);color:#fca5a5;border:1px solid rgba(239,68,68,.35)}
+  .cta-btn{
+    display:inline-flex;align-items:center;gap:8px;text-decoration:none;
+    font-weight:700;font-size:.9rem;color:#fff;
+    background:linear-gradient(135deg,#4f46e5,#7c3aed);
+    padding:13px 24px;border-radius:12px;
+    box-shadow:0 10px 26px rgba(79,70,229,.4);
+    transition:transform .2s ease,box-shadow .2s ease;
+  }
+  .cta-btn:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(79,70,229,.55)}
+
+  .chapters{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+  .chapter-chip{
+    display:inline-flex;align-items:center;gap:8px;text-decoration:none;
+    font-size:.82rem;color:var(--muted);background:var(--surface);
+    border:1px solid var(--border);padding:8px 14px;border-radius:999px;
+    transition:all .2s ease;
+  }
+  .chapter-chip strong{color:var(--text);font-weight:600}
+  .chapter-chip:hover{color:#fff;border-color:rgba(99,102,241,.5);background:rgba(99,102,241,.1);transform:translateY(-1px)}
+
+  /* ---------- STATS ---------- */
+  .stats-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;
+    margin:-26px auto 0;position:relative;z-index:2;
+  }
+  .stat-card{
+    background:linear-gradient(160deg,var(--surface-2),var(--surface));
+    border:1px solid var(--border);border-radius:var(--radius);
+    padding:20px 22px;box-shadow:0 12px 30px rgba(0,0,0,.35);
+    display:flex;align-items:center;gap:14px;
+    transition:transform .2s ease,border-color .2s ease;
+  }
+  .stat-card:hover{transform:translateY(-3px);border-color:rgba(99,102,241,.4)}
+  .stat-icon{
+    width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:1.25rem;flex-shrink:0;
+  }
+  .si-blue{background:rgba(99,102,241,.16)}
+  .si-green{background:rgba(16,185,129,.16)}
+  .si-amber{background:rgba(245,158,11,.16)}
+  .si-red{background:rgba(239,68,68,.16)}
+  .stat-num{font-family:'Plus Jakarta Sans';font-weight:800;font-size:1.35rem;line-height:1.2}
+  .stat-label{color:var(--muted);font-size:.8rem}
+
+  /* ---------- SECTIONS / UNITS ---------- */
+  main{padding:48px 0 64px}
+  .unit-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:20px;
+    overflow:hidden;margin-bottom:36px;box-shadow:0 16px 44px rgba(0,0,0,.4);
+  }
+  .unit-head{padding:22px 26px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+  .u-blue{background:linear-gradient(120deg,#2563eb,#4f46e5)}
+  .u-green{background:linear-gradient(120deg,#059669,#10b981)}
+  .u-violet{background:linear-gradient(120deg,#7c3aed,#8b5cf6)}
+  .unit-head h2{color:#fff;font-weight:800;font-size:1.25rem;letter-spacing:-.01em;display:flex;align-items:center;gap:12px}
+  .unit-tag{
+    background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);
+    color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    padding:4px 12px;border-radius:999px;white-space:nowrap;
+  }
+  .unit-sub{width:100%;color:rgba(255,255,255,.85);font-size:.85rem;margin-top:2px}
+  .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table{width:100%;min-width:760px;border-collapse:collapse}
+  thead th{
+    text-align:left;font-size:.72rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--muted);padding:14px 18px;border-bottom:1px solid var(--border);
+    background:rgba(148,163,184,.04);white-space:nowrap;
+  }
+  tbody td{padding:14px 18px;border-bottom:1px solid var(--border);vertical-align:middle;font-size:.9rem}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr{transition:background .18s ease}
+  tbody tr:hover{background:rgba(99,102,241,.07)}
+  .topic-name{font-weight:600;color:var(--text)}
+  .timeline{white-space:nowrap;color:var(--muted);font-size:.82rem;font-variant-numeric:tabular-nums}
+  td.notes-cell{color:var(--muted);font-size:.82rem;max-width:260px}
+
+  .badge{
+    display:inline-flex;align-items:center;gap:5px;
+    font-size:.74rem;font-weight:700;padding:4px 12px;border-radius:999px;white-space:nowrap;
+  }
+  .badge.covered{background:rgba(16,185,129,.14);color:#34d399;border:1px solid rgba(16,185,129,.38)}
+  .badge.partial{background:rgba(245,158,11,.14);color:#fbbf24;border:1px solid rgba(245,158,11,.38)}
+  .badge.notcovered{background:rgba(239,68,68,.14);color:#f87171;border:1px solid rgba(239,68,68,.38)}
+
+  .watch-btn{
+    display:inline-flex;align-items:center;gap:6px;text-decoration:none;
+    font-size:.78rem;font-weight:700;color:#fff;
+    background:linear-gradient(135deg,#4f46e5,#6d28d9);
+    padding:7px 16px;border-radius:999px;white-space:nowrap;
+    box-shadow:0 4px 12px rgba(79,70,229,.3);
+    transition:transform .18s ease,box-shadow .18s ease,filter .18s ease;
+  }
+  .watch-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(79,70,229,.5);filter:brightness(1.1)}
+  .self-study-chip{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:.76rem;font-weight:600;color:var(--muted);
+    background:rgba(148,163,184,.1);border:1px dashed var(--border);
+    padding:7px 14px;border-radius:999px;white-space:nowrap;
+  }
+
+  /* ---------- WATCH ORDER ---------- */
+  .order-box{
+    background:linear-gradient(150deg,rgba(245,158,11,.09),var(--surface));
+    border:1px solid rgba(245,158,11,.35);border-radius:20px;
+    padding:26px 28px;margin-bottom:36px;box-shadow:0 14px 38px rgba(0,0,0,.35);
+  }
+  .order-box h2{font-size:1.15rem;font-weight:800;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+  .order-box p.hint{color:var(--muted);font-size:.87rem;margin-bottom:16px}
+  .order-list{list-style:none;counter-reset:step}
+  .order-list li{
+    counter-increment:step;display:flex;align-items:flex-start;gap:14px;
+    padding:12px 0;border-bottom:1px dashed var(--border);font-size:.92rem;
+  }
+  .order-list li:last-child{border-bottom:none}
+  .order-list li::before{
+    content:counter(step);flex-shrink:0;
+    width:28px;height:28px;border-radius:999px;display:grid;place-items:center;
+    font-size:.8rem;font-weight:800;color:#fff;
+    background:linear-gradient(135deg,#f59e0b,#f97316);
+    box-shadow:0 4px 10px rgba(245,158,11,.35);
+  }
+  .order-list strong{color:#fcd34d}
+
+  /* ---------- MISSING TOPICS ---------- */
+  .missing-card{
+    background:var(--surface);border:1px solid rgba(239,68,68,.3);border-radius:20px;
+    overflow:hidden;box-shadow:0 16px 44px rgba(0,0,0,.4);
+  }
+  .missing-head{
+    background:linear-gradient(120deg,#b91c1c,#ef4444);
+    padding:22px 26px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+  }
+  .missing-head h2{color:#fff;font-weight:800;font-size:1.25rem;display:flex;align-items:center;gap:12px}
+  .missing-body{padding:10px 26px 22px}
+  .missing-item{
+    display:flex;gap:14px;align-items:flex-start;
+    padding:14px 0;border-bottom:1px dashed var(--border);
+  }
+  .missing-item:last-child{border-bottom:none}
+  .miss-num{
+    flex-shrink:0;width:28px;height:28px;border-radius:999px;display:grid;place-items:center;
+    font-size:.8rem;font-weight:800;color:#fff;
+    background:linear-gradient(135deg,#ef4444,#f97316);
+    box-shadow:0 4px 10px rgba(239,68,68,.35);
+  }
+  .missing-item .mt-title{font-weight:600;font-size:.94rem}
+  .missing-item .mt-advice{color:var(--muted);font-size:.84rem}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    border-top:1px solid var(--border);
+    padding:28px 20px;text-align:center;color:var(--muted);font-size:.85rem;
+    background:rgba(148,163,184,.03);
+  }
+  footer .heart{color:#f43f5e}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:680px){
+    .hero{padding:44px 0 36px}
+    .video-card{flex-direction:column;align-items:flex-start}
+    .video-thumb{width:72px;height:72px;font-size:1.6rem}
+    .unit-head{padding:18px 18px}
+    thead th,tbody td{padding:11px 14px}
+    .stats-grid{grid-template-columns:repeat(2,1fr);gap:12px}
+    .stat-card{padding:16px;flex-direction:column;align-items:flex-start;gap:10px}
+    td.notes-cell{max-width:none}
+  }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="#top" class="brand"><span class="brand-logo">🎓</span>SE Mid-Sem Prep</a>
+    <div class="nav-links">
+      <a href="#unit1">Unit 1</a>
+      <a href="#unit2">Unit 2</a>
+      <a href="#unit3">Unit 3</a>
+      <a href="#missing">Missing Topics</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="container">
+    <span class="hero-badge">📚 Exam Study Hub · Mid-Semester</span>
+    <h1>Software Engineering<br><span class="grad">Mid-Sem Mastery Guide</span></h1>
+    <p class="sub">Every syllabus topic mapped to one YouTube crash course — know exactly what's covered, what's partially covered, and what needs self-study.</p>
+
+    <div class="video-card">
+      <a class="video-thumb" href="https://youtu.be/NlLM3sVF8wY" target="_blank" rel="noopener" aria-label="Open video on YouTube">▶</a>
+      <div class="video-meta">
+        <div class="v-title">Complete Software Engineering in one shot | Semester Exam | Hindi</div>
+        <div class="v-channel">
+          KnowledgeGATE by Sanchit Sir
+          <span class="pill dark">⏱️ Duration: ~6 hours</span>
+        </div>
+      </div>
+      <a class="cta-btn" href="https://youtu.be/NlLM3sVF8wY" target="_blank" rel="noopener">▶ Watch on YouTube</a>
+    </div>
+
+    <div class="chapters">
+      <a class="chapter-chip" href="https://youtu.be/NlLM3sVF8wY?t=174" target="_blank" rel="noopener"><strong>Ch-1 Introduction</strong> 02:54 → 1:32:15</a>
+      <a class="chapter-chip" href="https://youtu.be/NlLM3sVF8wY?t=5535" target="_blank" rel="noopener"><strong>Ch-2 SRS &amp; Requirements</strong> 1:32:15 → 2:45:25</a>
+      <a class="chapter-chip" href="https://youtu.be/NlLM3sVF8wY?t=9925" target="_blank" rel="noopener"><strong>Ch-3 Design &amp; Metrics</strong> 2:45:25 → 4:36:15</a>
+      <a class="chapter-chip" href="https://youtu.be/NlLM3sVF8wY?t=16575" target="_blank" rel="noopener"><strong>Ch-4 Testing</strong> <span class="pill red">Not needed for MSE</span></a>
+      <a class="chapter-chip" href="https://youtu.be/NlLM3sVF8wY?t=19710" target="_blank" rel="noopener"><strong>Ch-5 Maintenance &amp; PM</strong> 5:28:30 → End</a>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span class="stat-icon si-blue">🗺️</span>
+      <div><div class="stat-num">34</div><div class="stat-label">topics mapped</div></div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-icon si-green">📦</span>
+      <div><div class="stat-num">3</div><div class="stat-label">units</div></div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-icon si-amber">⏱️</span>
+      <div><div class="stat-num">~4h 30m</div><div class="stat-label">watch time</div></div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-icon si-red">📖</span>
+      <div><div class="stat-num">6</div><div class="stat-label">topics to self-study</div></div>
+    </div>
+  </div>
+</div>
+
+<main class="container">
+
+  <!-- UNIT 1 -->
+  <section class="unit-card" id="unit1">
+    <div class="unit-head u-blue">
+      <h2><span class="unit-tag">Unit 1</span>Fundamentals of Software Engineering</h2>
+      <span class="unit-sub">Chapter-1 Introduction · 02:54 → 1:32:15</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Syllabus Topic</th>
+            <th>Coverage</th>
+            <th>Timeline</th>
+            <th>Watch</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="topic-name">Software Engineering, Product, Evolving Role</td>
+            <td><span class="badge covered">✅ Covered</span></td>
+            <td class="timeline">02:54 → 1:32:15</td>
+            <td><a class="watch-btn" href="https://youtu.be/NlLM3sVF8wY?t=174" target="_blank" rel="noopener">▶ Watch</a></td>
+            <td class="notes-cell">Intro section</td>
+          </tr>
+          <tr>
+            <td class="topic-name">Software Characteristics, Components, Applications</td>
+            <td><span class="badge covered">✅ Covered</span></td>
+            <td class="timeline">02:54 → 1:32:15</td>
+            <td><a class="watch-btn" href="https://youtu.be/NlLM3sVF8wY?t=174" target="_blank" rel="noopener">▶ Watch</a></td>
+            <td class="notes-cell"></td>
+          </tr>
+          <tr>
+            <td class="topic-name">Software Crisis and Myths</td>
+            <td><span class="badge covered">✅ Covered</span></td>
+            <td class="timeline">02:54 → 1:32:15</td>
+            <td><a class="watch-btn" href="https://youtu.be/NlLM3sVF8wY?t=174" target="_blank" rel="noopener">▶ Watch</a></td>
+            <td class="notes-cell"></td>
+          </tr>
+          <tr>
+            <td class="topic-name">Software Engineering Process</td>
+            <td><span class="badge covered">✅ Covered</span></td>
+            <td class="timeline">02:54 → 1:32:15</td>
+            <td><a class="watch-btn" href="https://youtu.be/NlLM3sVF8wY?t=174" target="_blank" rel="noopener">▶ Watch</a></td>
+            <td class="notes-cell"></td>
+          </tr>
+          <tr>
+            <td class="topic-name">Software Development Phases</td>
+            <td><span class="badge covered">✅ Covered</span></td>
+            <td class="timeline">02:54 → 1:32:15</td>
+            <td><a class="watch-btn" href="https://youtu.be/NlLM3sVF8wY?t=174" target="_blank" rel="noopener">▶ Watch</a></td>
+            <td class="notes-cell">SDLC phases explained</td>
+          </tr>
+          <tr>
+            <td class="topic-name">Waterfall, Prototype, Spiral Models</td>
+            <td><span class="badge covered">✅ Covered</span></td>
+            <td class="timeline">02:54 → 1:32:15</td>
+            <td><a class="watch-btn" href="https://youtu.be/NlLM3sVF8wY?t=174" target="_blank" rel="noopener">▶ Watch</a></td>
+            <td class="notes-cell">Detailed with diagrams</td>
+          </tr>
+          <tr>
+            <td class="topic-name">Incremental, RAD, Evolutionary, Iterative Models</td>
+            <td><span class="badge covered">✅ Covered</span></td>
+            <td class="timeline">02:54 → 1:32:15</td>
+            <td><a class="watch-btn" href="https://youtu.be/NlLM3sVF8wY?t=174" target="_blank" rel="noopener">▶ Watch</a></td>
+            <td class="notes-cell">As Evolutionary/Iterative Enhancement</td>
+          </tr>
+          <tr>
+            <td class="topic-name">Agile Process Model</td>
+            <td><span class="badge partial">⚠️ Partial</span></td>
+            <td class="timeline">02:54 → 1:32:15</td>
+            <td><a class="watch-btn" href="https://youtu.be/NlLM3sVF8wY?t=174" target="_blank" rel="noopener">▶ Watch</a></td>
+            <td class="notes-cell">Brief mention only; no Scrum/XP/Kanban detail</td>
+          </tr>
+          <tr>
+            <td class="topic-name">4GT Model</td>
+            <td><span class="badge notcovered">❌ Not Covered</span></td>
+            <td class="timeline">—</td>
+            <td><span class="self-study-chip">📚 Self-study</span></td>
+            <td class="notes-cell">Study from notes/Pressman Ch.2</td>
+          </tr>
+          <tr>
+            <td class="topic-name">Rational Unified Process (RUP)</td>
+            <td><span class="badge notcovered">❌ Not Covered</span></td>
+            <td class="timeline">—</td>
+            <td><span class="self-study-chip">📚 Self-study</span></td>
+            <td class="notes-cell">Study from notes/Pressman Ch.3</td>
+          </tr>
+          <tr>
+            <td class="topic-name">CASE Tools</td>
+            <td><span class="badge covered">✅ Covered</span></td>
+            <td class="timeline">5:28:30 → End</td>
+            <td><a class="watch-btn" href="https://youtu.be/NlLM3sVF8wY?t=19710" target="_blank" rel="noopener">▶ Watch</a></td>
+            <td class="notes-cell">In Chapter-5</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- UNIT 2 -->
+  <section class="unit-card" id="unit2">
+    <div class="unit-head u-green">
+      <h2><span class="unit-tag">Unit 2</span>Planning and Managing Software Projects</h2>
+      <span class="unit-sub">Ch-3 Metrics · 2:45:25 → 4:36:15 &nbsp;+&nbsp; Ch-5 PM · 5:28:30 → End</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Syllabus Topic</th>
+            <th>Coverage</th>
+            <th>Timeline</th>
+            <th>Watch</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="topic-name">People, Product, Process, Project (4Ps)</td>
+            <td><span class="badge partial">⚠️ Partial</span></td>
+            <td class="timeline">5:28:30 → End</td>
+            <td><a class="watch-btn" href="https://youtu.be/NlLM3sVF8wY?t=19710" target="_blank" rel="noopener">▶ Watch</a></td>
+            <td class="notes-cell">Implicit in PM discussion</td>
+          </tr>
+          <tr>
+            <td class="topic-name">Measures, Metrics and Indicators</td>
+            <td><span class="badge covered">✅ Covered</span></td>
+            <td class="timeline">2:45:25 → 4:36:15</td>
+            <td><a class="watch-btn" href="https://youtu.be/NlLM3sVF8wY?t=9925" target="_blank" rel="noopener">▶ Watch</a></td>
+            <td class="notes-cell">Halstead, Function Point, Cyclomatic Complexity</td>
+          </tr>
+          <tr>
+            <td class="topic-name">Metrics for Software Quality</td>
+            <td><span class="badge covered">✅ Covered</span></td>
+            <td class="timeline">2:45:25 → 4:36:15</td>
+            <td><a class="watch-btn" href="https://youtu.be/NlLM3sVF8wY?t=9925" target="_blank" rel="noopener">▶ Watch</a></td>
+            <td class="notes-cell">In metrics section</td>
+          </tr>
+          <tr>
+            <td class="topic-name">Scope, Software Project Estimation</td>
+            <td><span class="badge covered">✅ Covered</span></td>
+            <td class="timeline">5:28:30 → End</td>
+            <td><a class="watch-btn" href="https://youtu.be/NlLM3sVF8wY?t=19710" target="_blank" rel="noopener">▶ Watch</a></td>
+            <td class="notes-cell">COCOMO covered</td>
+          </tr>
+          <tr>
+            <td class="topic-name">Make/Buy Decision</td>
+            <td><span class="badge notcovered">❌ Not Covered</span></td>
+            <td class="timeline">—</td>
+            <td><span class="self-study-chip">📚 Self-study</span></td>
+            <td class="notes-cell">Study from notes</td>
+          </tr>
+          <tr>
+            <td class="topic-name">Software Risks (Identification, Projection, Assessment, Monitoring)</td>
+            <td><span class="badge covered">✅ Covered</span></td>
+            <td class="timeline">5:28:30 → End</td>
+            <td><a class="watch-btn" href="https://youtu.be/NlLM3sVF8wY?t=19710" target="_blank" rel="noopener">▶ Watch</a></td>
+            <td class="notes-cell">Risk Analysis &amp; Management</td>
+          </tr>
+          <tr>
+            <td class="topic-name">Project Scheduling &amp; Tracking, WBS</td>
+            <td><span class="badge partial">⚠️ Partial</span></td>
+            <td class="timeline">5:28:30 → End</td>
+            <td><a class="watch-btn" href="https://youtu.be/NlLM3sVF8wY?t=19710" target="_blank" rel="noopener">▶ Watch</a></td>
+            <td class="notes-cell">Mentioned, no detailed WBS</td>
+          </tr>
+          <tr>
+            <td class="topic-name">Timeline Charts (Gantt/PERT)</td>
+            <td><span class="badge partial">⚠️ Partial</span></td>
+            <td class="timeline">5:28:30 → End</td>
+            <td><a class="watch-btn" href="https://youtu.be/NlLM3sVF8wY?t=19710" target="_blank" rel="noopener">▶ Watch</a></td>
+            <td class="notes-cell">No visual chart examples</td>
+          </tr>
+          <tr>
+            <td class="topic-name">Project Plan</td>
+            <td><span class="badge covered">✅ Covered</span></td>
+            <td class="timeline">5:28:30 → End</td>
+            <td><a class="watch-btn" href="https://youtu.be/NlLM3sVF8wY?t=19710" target="_blank" rel="noopener">▶ Watch</a></td>
+            <td class="notes-cell">Overview in PM section</td>
+          </tr>
+          <tr>
+            <td class="topic-name">Empirical Estimation (COCOMO) – Self Study</td>
+            <td><span class="badge covered">✅ Covered</span></td>
+            <td class="timeline">5:28:30 → End</td>
+            <td><a class="watch-btn" href="https://youtu.be/NlLM3sVF8wY?t=19710" target="_blank" rel="noopener">▶ Watch</a></td>
+            <td class="notes-cell">COCOMO I &amp; II explained well</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- UNIT 3 -->
+  <section class="unit-card" id="unit3">
+    <div class="unit-head u-violet">
+      <h2><span class="unit-tag">Unit 3</span>Requirement Analysis</h2>
+      <span class="unit-sub">Chapter-2 SRS &amp; Requirements · 1:32:15 → 2:45:25</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Syllabus Topic</th>
+            <th>Coverage</th>
+            <th>Timeline</th>
+            <th>Watch</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="topic-name">Communication Techniques, FAST, QFD</td>
+            <td><span class="badge covered">✅ Covered</span></td>
+            <td class="timeline">1:32:15 → 2:45:25</td>
+            <td><a class="watch-btn" href="https://youtu.be/NlLM3sVF8wY?t=5535" target="_blank" rel="noopener">▶ Watch</a></td>
+            <td class="notes-cell">Elicitation techniques incl. Delphi, FAST, QFD</td>
+          </tr>
+          <tr>
+            <td class="topic-name">Requirement Engg Process (Elicitation, Analysis, Documentation, Review)</td>
+            <td><span class="badge covered">✅ Covered</span></td>
+            <td class="timeline">1:32:15 → 2:45:25</td>
+            <td><a class="watch-btn" href="https://youtu.be/NlLM3sVF8wY?t=5535" target="_blank" rel="noopener">▶ Watch</a></td>
+            <td class="notes-cell">Full process</td>
+          </tr>
+          <tr>
+            <td class="topic-name">Feasibility Study</td>
+            <td><span class="badge covered">✅ Covered</span></td>
+            <td class="timeline">1:32:15 → 2:45:25</td>
+            <td><a class="watch-btn" href="https://youtu.be/NlLM3sVF8wY?t=5535" target="_blank" rel="noopener">▶ Watch</a></td>
+            <td class="notes-cell"></td>
+          </tr>
+          <tr>
+            <td class="topic-name">Analysis Principles (Modeling, Partitioning, Prototyping, Specification)</td>
+            <td><span class="badge covered">✅ Covered</span></td>
+            <td class="timeline">1:32:15 → 2:45:25</td>
+            <td><a class="watch-btn" href="https://youtu.be/NlLM3sVF8wY?t=5535" target="_blank" rel="noopener">▶ Watch</a></td>
+            <td class="notes-cell">Prototyping also in Ch-1</td>
+          </tr>
+          <tr>
+            <td class="topic-name">Data Modeling</td>
+            <td><span class="badge covered">✅ Covered</span></td>
+            <td class="timeline">1:32:15 → 2:45:25</td>
+            <td><a class="watch-btn" href="https://youtu.be/NlLM3sVF8wY?t=5535" target="_blank" rel="noopener">▶ Watch</a></td>
+            <td class="notes-cell">ER Diagrams detailed</td>
+          </tr>
+          <tr>
+            <td class="topic-name">Functional Modeling &amp; Information Flow</td>
+            <td><span class="badge covered">✅ Covered</span></td>
+            <td class="timeline">1:32:15 → 2:45:25</td>
+            <td><a class="watch-btn" href="https://youtu.be/NlLM3sVF8wY?t=5535" target="_blank" rel="noopener">▶ Watch</a></td>
+            <td class="notes-cell">DFDs detailed</td>
+          </tr>
+          <tr>
+            <td class="topic-name">Data Flow Diagrams (DFD)</td>
+            <td><span class="badge covered">✅ Covered</span></td>
+            <td class="timeline">1:32:15 → 2:45:25</td>
+            <td><a class="watch-btn" href="https://youtu.be/NlLM3sVF8wY?t=5535" target="_blank" rel="noopener">▶ Watch</a></td>
+            <td class="notes-cell">Context, Level-1, Level-2</td>
+          </tr>
+          <tr>
+            <td class="topic-name">Entity Relationship Diagrams</td>
+            <td><span class="badge covered">✅ Covered</span></td>
+            <td class="timeline">1:32:15 → 2:45:25</td>
+            <td><a class="watch-btn" href="https://youtu.be/NlLM3sVF8wY?t=5535" target="_blank" rel="noopener">▶ Watch</a></td>
+            <td class="notes-cell">Entities, attributes, relationships</td>
+          </tr>
+          <tr>
+            <td class="topic-name">Decision Tables &amp; Trees</td>
+            <td><span class="badge covered">✅ Covered</span></td>
+            <td class="timeline">1:32:15 → 2:45:25</td>
+            <td><a class="watch-btn" href="https://youtu.be/NlLM3sVF8wY?t=5535" target="_blank" rel="noopener">▶ Watch</a></td>
+            <td class="notes-cell"></td>
+          </tr>
+          <tr>
+            <td class="topic-name">SRS Document &amp; IEEE Standards</td>
+            <td><span class="badge covered">✅ Covered</span></td>
+            <td class="timeline">1:32:15 → 2:45:25</td>
+            <td><a class="watch-btn" href="https://youtu.be/NlLM3sVF8wY?t=5535" target="_blank" rel="noopener">▶ Watch</a></td>
+            <td class="notes-cell">IEEE 830 template</td>
+          </tr>
+          <tr>
+            <td class="topic-name">SRS Review</td>
+            <td><span class="badge covered">✅ Covered</span></td>
+            <td class="timeline">1:32:15 → 2:45:25</td>
+            <td><a class="watch-btn" href="https://youtu.be/NlLM3sVF8wY?t=5535" target="_blank" rel="noopener">▶ Watch</a></td>
+            <td class="notes-cell">Review techniques</td>
+          </tr>
+          <tr>
+            <td class="topic-name">Extension to Real-time Systems</td>
+            <td><span class="badge notcovered">❌ Not Covered</span></td>
+            <td class="timeline">—</td>
+            <td><span class="self-study-chip">📚 Self-study</span></td>
+            <td class="notes-cell">Study from notes</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- WATCH ORDER -->
+  <aside class="order-box" id="order">
+    <h2>🎯 Recommended Watch Order</h2>
+    <p class="hint">Follow this sequence to cover all three units efficiently (~4h 30m total).</p>
+    <ol class="order-list">
+      <li><span><strong>Unit 1:</strong> 02:54 → 1:32:15 (~1.5h)</span></li>
+      <li><span><strong>Unit 3:</strong> 1:32:15 → 2:45:25 (~1.2h)</span></li>
+      <li><span><strong>Unit 2 Metrics:</strong> 2:45:25 → 4:36:15 (metrics part only)</span></li>
+      <li><span><strong>Unit 2 PM/CASE:</strong> 5:28:30 → End (~40min)</span></li>
+    </ol>
+  </aside>
+
+  <!-- MISSING TOPICS -->
+  <section class="missing-card" id="missing">
+    <div class="missing-head">
+      <h2>🚨 Missing Topics — Self-Study List</h2>
+      <span class="unit-tag">6 gaps found</span>
+    </div>
+    <div class="missing-body">
+      <div class="missing-item">
+        <span class="miss-num">1</span>
+        <div>
+          <div class="mt-title">4GT Model</div>
+          <div class="mt-advice">→ Pressman Ch.2 — read the Fourth Generation Techniques section and note its pros/cons vs other SDLC models.</div>
+        </div>
+      </div>
+      <div class="missing-item">
+        <span class="miss-num">2</span>
+        <div>
+          <div class="mt-title">Rational Unified Process</div>
+          <div class="mt-advice">→ Pressman Ch.3 — memorize the 4 phases (Inception, Elaboration, Construction, Transition) and core workflows.</div>
+        </div>
+      </div>
+      <div class="missing-item">
+        <span class="miss-num">3</span>
+        <div>
+          <div class="mt-title">Make/Buy Decision</div>
+          <div class="mt-advice">→ PM chapter notes — learn the decision matrix steps (identify criteria, rank weights, compute scores).</div>
+        </div>
+      </div>
+      <div class="missing-item">
+        <span class="miss-num">4</span>
+        <div>
+          <div class="mt-title">Detailed WBS/Gantt/PERT charts</div>
+          <div class="mt-advice">→ PM tools notes — practice drawing one Gantt chart and one PERT network with critical path calculation.</div>
+        </div>
+      </div>
+      <div class="missing-item">
+        <span class="miss-num">5</span>
+        <div>
+          <div class="mt-title">Real-time Systems Extension</div>
+          <div class="mt-advice">→ Specialized SE texts — focus on how DFDs/ERDs extend for real-time (timing constraints, control flows).</div>
+        </div>
+      </div>
+      <div class="missing-item">
+        <span class="miss-num">6</span>
+        <div>
+          <div class="mt-title">Detailed Agile (Scrum, XP, Kanban)</div>
+          <div class="mt-advice">→ Separate resource — video only briefly mentions Agile; learn Scrum roles/ceremonies, XP practices, Kanban boards.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Made for MSE Preparation <span class="heart">♥</span> Based on KnowledgeGATE one-shot video
+</footer>
+
+</body>
+</html>
